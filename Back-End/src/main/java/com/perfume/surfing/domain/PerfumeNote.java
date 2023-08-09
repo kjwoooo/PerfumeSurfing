@@ -21,10 +21,6 @@ public class PerfumeNote {
     @JoinColumn(name="NOTE_ID", nullable = false)
     private Note note;
 
-//    @ManyToOne
-//    @JoinColumn(name = "note_id")
-//    private Note note;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "NOTE_TYPE", nullable = false)
     private NoteType note_type;
