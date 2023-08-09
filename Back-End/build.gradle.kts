@@ -30,6 +30,8 @@ dependencies {
 	compileOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation ("com.fasterxml.jackson.core:jackson-databind")
+
 
 	//JUnit4 추가
 	testImplementation("org.junit.vintage:junit-vintage-engine") {
@@ -38,5 +40,5 @@ dependencies {
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+	useJUnitPlatform()//
 }
