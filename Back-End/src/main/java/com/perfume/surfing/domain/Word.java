@@ -21,8 +21,8 @@ public class Word {
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "count", nullable = false)
-    private Long count;
+    @Column(name = "WEIGHT", nullable = false)
+    private Long weight = 0L;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", nullable = false)

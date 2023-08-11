@@ -29,23 +29,35 @@ public class BrandServiceTest {
         Brand brand = new Brand();
         brand.setName("딥디크");
         brand.setUrl("https://www.sivillage.com/dispctg/initBrandCtg.siv?disp_ctg_no=010000039942");
-        brand.setCreated_at(sqlDate());
+        brand.setCreated_at(SqlDate.now());
+        brand.setUpdated_at(SqlDate.now());
 
         //when
         Long saveId = brandService.add(brand);
-        System.out.println("savedId: " + saveId);
 
         //then
         em.flush();
-        assertEquals(brand, brandRepository.findById(saveId));
+        assertEquals(brand, brandService.findOne(saveId));
     }
 
-    public java.sql.Date sqlDate(){
-        Date utilDate = new Date();
-        long milliSeconds = utilDate.getTime();
-        java.sql.Date sqlDate = new java.sql.Date(milliSeconds);
+    @Test(expected = IllegalStateException.class)
+    public void 중복_브랜드_예외() throws Exception{
+        //given
+        Brand brand1 = new Brand();
+        brand1.setName("딥디크");
+        brand1.setCreated_at(SqlDate.now());
+        brand1.setUpdated_at(SqlDate.now());
 
-        return sqlDate;
+        Brand brand2 = new Brand();
+        brand2.setName("딥디크");      // 이름 중복
+        brand2.setCreated_at(SqlDate.now());
+        brand2.setUpdated_at(SqlDate.now());
+
+        //when
+        brandService.add(brand1);
+        brandService.add(brand2);   // 예외발생해야 함
+
+        //then
+        fail("딥디크 브랜드 이름 중복으로 예외가 발생해야한다.");
     }
-
 }

@@ -28,7 +28,7 @@ public class BrandService {
 
     private void validateDuplicateBrand(Brand brand) {
         brandRepository.findByName(brand.getName())
-                .ifPresent(m->{
+                .ifPresent(b->{
                     throw new IllegalStateException("이미 존재하는 브랜드입니다.");
                 });
     }
