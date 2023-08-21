@@ -11,12 +11,14 @@
 #    cache: false
 
 
+# for test
 spring:
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:tcp://localhost/~/PerfumeSurfing;
     username: sa
-    password:
+    password: 1234
     driver-class-name: org.h2.Driver
+
 
   jpa:
     hibernate:

@@ -21,31 +21,54 @@ import static junit.framework.Assert.*;
 public class WordServiceTest {
 
     @Autowired private WordRepository wordRepository;
-
     @Autowired private WordService wordService;
-
     @Autowired EntityManager em;
 
     @Test
-    public void 저장() {
-        // 테스트용 데이터
-        String name = "TestWord";
-        String alias = "test";
-        WordType type = WordType.BRAND;
+    public void 워드추가() throws Exception{
+        //given
+        String name = "시트러스";
+        String alias = "시트라스";
+        WordType type = WordType.NOTE;
 
-        // 서비스 메서드 호출
-        Word savedWord = wordService.saveWordWithMapping(name, alias, type);
+        //when
+        Word word = wordService.saveWordWithMapping(name,alias,type);
+        Long saveId = word.getId();
 
-        // 결과 확인
+        //then
         em.flush();
-        assertNotNull(savedWord.getId()); // 저장된 엔티티의 ID가 null이 아닌지 확인
-        assertEquals(name, savedWord.getName()); // 저장된 엔티티의 이름이 올바른지 확인
-        assertEquals(alias, savedWord.getAlias()); // 저장된 엔티티의 alias가 올바른지 확인
-        assertEquals(type, savedWord.getType()); // 저장된 엔티티의 type이 올바른지 확인
+        assertEquals(word, wordRepository.findById(saveId));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void 중복_워드_예외() throws Exception{
+        //given
+        String name = "시트러스";
+        String alias = "시트라스";
+        WordType type = WordType.NOTE;
+
+        //when
+        Word word1 = wordService.saveWordWithMapping(name,alias,type);
+        Word word2 = wordService.saveWordWithMapping(name,alias,type);
+
+        //then
+        fail("이름과 별칭이 같은 키워드 중복으로 예외가 발생해야한다.");
     }
 
     @Test
-    public void 자동완성_반환_에러() {
+    public void 자동완성_반환() throws Exception{
+        //given
+
+
+        //when
+
+
+        //then
+
+    }
+
+    @Test
+    public void 자동완성_반환_예외() {
 
         // 테스트용 데이터
         String alias = "test";
@@ -56,6 +79,7 @@ public class WordServiceTest {
         // 결과 확인
         assertNotNull(result); // 결과가 null이 아닌지 확인
         assertFalse(result.isEmpty());
-
     }
+
+
 }

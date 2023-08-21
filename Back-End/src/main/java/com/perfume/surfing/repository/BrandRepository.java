@@ -27,11 +27,11 @@ public class BrandRepository {
     }
 
     public Optional<Brand> findByName(String name){
-        List<Brand> result = em.createQuery("select m from Brand m where m.name= :name", Brand.class)
+        return em.createQuery("select m from Brand m where m.name= :name", Brand.class)
                 .setParameter("name", name)
-                .getResultList();
-
-        return result.stream().findAny();
+                .getResultList()
+                .stream()
+                .findAny();
     }
 
     public List<Brand> findAll() {
